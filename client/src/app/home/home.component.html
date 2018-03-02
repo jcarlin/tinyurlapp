@@ -1,0 +1,34 @@
+<h4 *ngIf="!auth.isAuthenticated()">
+  You are not logged in! Please <a (click)="auth.login()">Log In</a> to continue.
+</h4>
+<div class="app" *ngIf="auth.isAuthenticated()">
+  <div class="url-container">
+    <mat-card>
+      <mat-card-title>Tiny URL Generator</mat-card-title>
+      <mat-form-field style="width: 75%; padding-right: 20px;">
+        <input matInput #input type="url" placeholder="Paste your url here">
+      </mat-form-field>
+      <button mat-button (click)="shortenUrl(input.value)">Shorten URL</button>
+    </mat-card>
+  </div>
+  <div class="urls-container">
+    <mat-card>
+      <mat-card-title>Generated Tiny Urls</mat-card-title>
+        <table style="width: 100%">
+          <thead>
+            <th>URL</th>
+            <th>Tiny URL</th>
+            <th>Clicks</th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let url of urls$ | async">
+              <td>{{url.url}}</td>
+              <td><a target="_blank" (click)="tinyUrlClicked($event);" href="{{url.tinyUrl}}">{{url.tinyUrl}}</a></td>
+              <td>{{url.clicks}}</td>
+            </tr>
+          </tbody>
+        </table>
+    <!-- <button (click)="clearUrls()">Clear</button> -->
+    </mat-card>
+  </div>
+</div>
