@@ -3,7 +3,7 @@ import { AuthService } from './../auth/auth.service';
 import { MatFormField } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import {MatTableDataSource} from '@angular/material';
+import { MatTableDataSource } from '@angular/material';
 
 import { DataService } from '../services/data.service';
 
@@ -18,9 +18,6 @@ import 'rxjs/add/operator/catch';
 })
 export class HomeComponent implements OnInit {
   public urls$: Observable<any[]>;
-
-  displayedColumns = ['url', 'tinyUrl', 'clicks'];
-  // dataSource = new MatTableDataSource(this.dataService.getTinyUrls());
 
   constructor(
     public auth: AuthService,
@@ -42,6 +39,7 @@ export class HomeComponent implements OnInit {
     this.dataService.shortenUrl(url).subscribe(
       result => {
         console.log('result: ', result);
+        this.urls$ = this.dataService.getTinyUrls();
       },
       err => {
         console.log(err);
@@ -55,6 +53,7 @@ export class HomeComponent implements OnInit {
     this.dataService.updateClicks(tinyUrl).subscribe(
       result => {
         console.log('result: ', result);
+        this.urls$ = this.dataService.getTinyUrls();
       },
       err => {
         console.log(err);
